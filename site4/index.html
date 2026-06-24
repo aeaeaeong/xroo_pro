@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1026" />
+<title>연오랑과 세오녀 · 씬 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--gold:#ffd97a;--gold-soft:#ffe9b0;--text:#f6f2ff;--panel:rgba(8,10,30,.62);
+    --line:rgba(255,217,122,.45);--good:#7ee0a8;--bad:#ff9aa2;--red:#ff6b6b;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{min-height:100svh;font-family:"Gowun Batang",serif;color:var(--text);
+    background:linear-gradient(180deg,#0b1026 0%,#161145 45%,#2a1a4a 100%);overflow-x:hidden;position:relative;}
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3.5s infinite ease-in-out;}
+  @keyframes twinkle{0%,100%{opacity:.2;}50%{opacity:1;}}
+  .moon{position:absolute;top:7%;right:12%;width:84px;height:84px;border-radius:50%;
+    background:radial-gradient(circle at 34% 32%,#fffdf2,#ffe9a8 60%,#e9c463 100%);
+    box-shadow:0 0 36px 10px rgba(255,228,150,.45),0 0 90px 30px rgba(255,210,120,.18);animation:float 7s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  #stage{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;
+    justify-content:center;padding:24px 18px calc(28px + env(safe-area-inset-bottom));}
+  .scene{display:none;width:100%;max-width:520px;text-align:center;}
+  .scene.active{display:block;animation:fade .55s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .act{font-family:"Gaegu",cursive;letter-spacing:.12em;color:var(--gold);font-size:.95rem;margin:0 0 14px;opacity:.9;}
+  .panel{background:var(--panel);backdrop-filter:blur(3px);border:1px solid var(--line);
+    border-radius:20px;padding:26px 22px;box-shadow:0 14px 40px rgba(0,0,0,.4);}
+  .story p{font-size:clamp(1.08rem,5vw,1.32rem);line-height:1.65;margin:.15em 0;word-break:keep-all;opacity:.95;text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .q{font-size:clamp(1.22rem,5.6vw,1.55rem);line-height:1.5;font-weight:700;color:var(--gold-soft);
+    word-break:keep-all;margin:14px 0 4px;text-shadow:0 2px 14px rgba(255,210,120,.35);}
+  .sub{font-size:clamp(1rem,4.4vw,1.15rem);opacity:.92;margin:8px 0 0;word-break:keep-all;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:18px 0 4px;}
+  .btns{display:flex;flex-direction:column;gap:12px;margin-top:18px;}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-family:"Gowun Batang",serif;
+    cursor:pointer;border:none;width:100%;min-height:58px;border-radius:16px;font-size:1.15rem;font-weight:700;
+    color:#231a05;background:linear-gradient(180deg,#ffe9b0,#ffd070);box-shadow:0 8px 20px rgba(255,200,100,.28);
+    transition:transform .12s, box-shadow .12s;word-break:keep-all;padding:10px 14px;}
+  .btn:active{transform:translateY(2px) scale(.99);}
+  .btn.ghost{background:transparent;color:var(--gold-soft);border:1.5px solid var(--line);box-shadow:none;font-weight:400;}
+  .btn.choice{background:rgba(255,255,255,.06);color:var(--text);border:1.5px solid var(--line);box-shadow:none;font-size:1.2rem;}
+  .btn.choice:active{background:rgba(255,217,122,.18);}
+  .tag{font-family:"Gaegu",cursive;color:var(--gold);font-weight:700;}
+  .big-emoji{font-size:3.2rem;line-height:1;margin-bottom:6px;}
+  .result-title{font-family:"Gaegu",cursive;font-size:clamp(1.9rem,8.5vw,2.5rem);margin:4px 0 10px;}
+  .good .result-title{color:var(--good);} .bad .result-title{color:var(--bad);}
+</style>
+</head>
+<body>
+<div id="sky"><div class="moon"></div></div>
+<main id="stage">
+
+  <!-- 씬 9: 쌍거북이바위 퀴즈 (객관식) -->
+  <section class="scene active" id="quiz">
+    <p class="act">XROO · 씬 9</p>
+    <div class="panel">
+      <div class="story">
+        <p>연오랑과 세오녀가</p>
+        <p>타고 간 전설의 바위?!</p>
+      </div>
+      <div class="divider"></div>
+      <p class="q">이 바위의 이름은<br/>무엇인가요?</p>
+      <div class="btns">
+        <button class="btn choice" onclick="answer(false)"><span class="tag">A</span> 왕거북이바위</button>
+        <button class="btn choice" onclick="answer(false)"><span class="tag">B</span> 닌자거북이바위</button>
+        <button class="btn choice" onclick="answer(true)"><span class="tag">C</span> 쌍거북이바위</button>
+        <button class="btn choice" onclick="answer(false)"><span class="tag">D</span> 꼬북이바위</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 오답 -->
+  <section class="scene bad" id="wrong">
+    <div class="panel">
+      <p class="big-emoji">💧</p>
+      <p class="result-title">처음부터 다시!</p>
+      <p class="sub">바위를 다시 보고<br/>도전해 봐요.</p>
+      <div class="btns">
+        <a class="btn ghost" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1?startSceneID=639128">처음으로 돌아가기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 정답 -->
+  <section class="scene good" id="correct">
+    <div class="panel">
+      <p class="big-emoji">🐢</p>
+      <p class="result-title">정답이에요!</p>
+      <p class="sub">바로 <b>쌍거북이바위</b>!<br/>이야기는 계속됩니다…</p>
+      <div class="btns">
+        <a class="btn" href="https://player.xroo.io/space/7baec520e42e436d9b583214e36d0712">다음 이야기로 →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script>
+  function go(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+  function answer(ok){go(ok?'correct':'wrong');}
+  (function(){const sky=document.getElementById('sky');for(let i=0;i<46;i++){const s=document.createElement('div');
+    s.className='star';const z=Math.random()*2.2+0.8;s.style.width=s.style.height=z+'px';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*3.5)+'s';s.style.opacity=(Math.random()*0.6+0.3).toFixed(2);sky.appendChild(s);}})();
+</script>
+</body>
+</html>

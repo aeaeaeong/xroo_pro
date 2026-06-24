@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1026" />
+<title>연오랑과 세오녀 · XROO 미션</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--gold:#ffd97a;--gold-soft:#ffe9b0;--text:#f6f2ff;--panel:rgba(8,10,30,.62);
+    --line:rgba(255,217,122,.45);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{min-height:100svh;font-family:"Gowun Batang",serif;color:var(--text);
+    background:linear-gradient(180deg,#0b1026 0%,#161145 45%,#2a1a4a 100%);overflow-x:hidden;position:relative;}
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:tw 3.5s infinite ease-in-out;}
+  @keyframes tw{0%,100%{opacity:.2;}50%{opacity:1;}}
+  .moon{position:absolute;top:5%;right:10%;width:74px;height:74px;border-radius:50%;
+    background:radial-gradient(circle at 34% 32%,#fffdf2,#ffe9a8 60%,#e9c463 100%);
+    box-shadow:0 0 30px 8px rgba(255,228,150,.4),0 0 80px 26px rgba(255,210,120,.15);animation:fl 7s ease-in-out infinite;}
+  @keyframes fl{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  #wrap{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;justify-content:center;
+    padding:28px 18px calc(28px + env(safe-area-inset-bottom));}
+  .card{width:100%;max-width:520px;text-align:center;}
+  .act{font-family:"Gaegu",cursive;letter-spacing:.12em;color:var(--gold);font-size:.95rem;margin:0 0 8px;}
+  h1{font-family:"Gaegu",cursive;color:var(--gold-soft);font-size:clamp(1.9rem,8vw,2.5rem);
+    margin:2px 0 4px;text-shadow:0 2px 18px rgba(255,210,120,.4);word-break:keep-all;}
+  .sub{opacity:.9;margin:0 0 18px;word-break:keep-all;font-size:clamp(.98rem,4.2vw,1.1rem);}
+  .panel{background:var(--panel);backdrop-filter:blur(3px);border:1px solid var(--line);
+    border-radius:20px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,.4);}
+  a.link{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);
+    background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin:10px 0;transition:transform .12s, background .12s;text-align:left;}
+  a.link:active{transform:translateY(2px) scale(.99);background:rgba(255,217,122,.16);}
+  .num{font-family:"Gaegu",cursive;font-weight:700;color:#231a05;background:linear-gradient(180deg,#ffe9b0,#ffd070);
+    width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 38px;font-size:1.2rem;}
+  .t{flex:1;}
+  .t b{display:block;font-size:1.1rem;color:var(--gold-soft);word-break:keep-all;}
+  .t span{font-size:.9rem;opacity:.82;word-break:keep-all;}
+  .arrow{color:var(--gold);font-size:1.2rem;}
+  .foot{margin-top:14px;font-size:.86rem;opacity:.7;word-break:keep-all;}
+</style>
+</head>
+<body>
+<div id="sky"><div class="moon"></div></div>
+<div id="wrap">
+  <div class="card">
+    <p class="act">XROO MISSION</p>
+    <h1>연오랑과 세오녀</h1>
+    <p class="sub">달빛을 따라가는 다섯 개의 퀴즈</p>
+    <div class="panel">
+      <a class="link" href="site1/"><span class="num">1</span><span class="t"><b>마을의 이름은?</b><span>씬 1 · 객관식</span></span><span class="arrow">→</span></a>
+      <a class="link" href="site2/"><span class="num">2</span><span class="t"><b>해(日)의 음은?</b><span>씬 3 · 주관식 · 첫번째 힌트</span></span><span class="arrow">→</span></a>
+      <a class="link" href="site3/"><span class="num">3</span><span class="t"><b>대장간의 힌트</b><span>씬 6 · 주관식 · 두번째 힌트</span></span><span class="arrow">→</span></a>
+      <a class="link" href="site4/"><span class="num">4</span><span class="t"><b>이 바위의 이름은?</b><span>씬 9 · 객관식</span></span><span class="arrow">→</span></a>
+      <a class="link" href="site5/"><span class="num">5</span><span class="t"><b>한 해를 완성하는 글자</b><span>씬 12 · 객관식 · 세번째 힌트</span></span><span class="arrow">→</span></a>
+    </div>
+    <p class="foot">각 퀴즈는 정답·오답 시 XROO 씬으로 이동합니다.</p>
+  </div>
+</div>
+<script>
+  (function(){const sky=document.getElementById('sky');for(let i=0;i<40;i++){const s=document.createElement('div');
+    s.className='star';const z=Math.random()*2.2+0.8;s.style.width=s.style.height=z+'px';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*3.5)+'s';s.style.opacity=(Math.random()*0.6+0.3).toFixed(2);sky.appendChild(s);}})();
+</script>
+</body>
+</html>
