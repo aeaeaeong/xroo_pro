@@ -30,7 +30,8 @@
   .act{font-family:"Gaegu",cursive;letter-spacing:.12em;color:var(--gold);font-size:.95rem;margin:0 0 14px;opacity:.9;}
   .panel{background:var(--panel);backdrop-filter:blur(3px);border:1px solid var(--line);
     border-radius:20px;padding:26px 22px;box-shadow:0 14px 40px rgba(0,0,0,.4);}
-  .story p{font-size:clamp(1.08rem,5vw,1.34rem);line-height:1.7;margin:.15em 0;word-break:keep-all;opacity:.95;text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .story p{font-size:clamp(1.08rem,5vw,1.34rem);line-height:1.7;margin:.32em 0;word-break:keep-all;opacity:.95;text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .story p.say{color:var(--gold-soft);font-style:italic;}
   .q{font-size:clamp(1.2rem,5.6vw,1.5rem);line-height:1.55;font-weight:700;color:var(--gold-soft);
     word-break:keep-all;margin:14px 0 4px;text-shadow:0 2px 14px rgba(255,210,120,.35);}
   .hanja-big{font-weight:700;font-size:1.25em;color:#fff;}
@@ -65,13 +66,14 @@
     <p class="act">XROO · 씬 3</p>
     <div class="panel">
       <div class="story">
-        <p>연오랑이 떠난 뒤,</p>
-        <p>신라는 낮을 밝히던</p>
-        <p>빛을 잃었습니다.</p>
+        <p>연오랑이 세오녀에게 말했습니다.</p>
+        <p class="say">“여보, 우리 옆집 이름이 뭐였지?”</p>
+        <p>세오녀가 답합니다.</p>
+        <p class="say">“세 글자였는데… 기억이 가물가물해”</p>
       </div>
       <div class="divider"></div>
-      <p class="q">세오녀가 찾아 나선<br/>‘해’를 뜻하는 한자<br/><span class="hanja-big">日</span>의 음은 무엇일까요?</p>
-      <p class="hint-final">!!최종 미션의 첫번째 힌트!!</p>
+      <p class="q">그 이름의 가운데 글자 음을 찾아<br/>연오랑을 도와주세요!</p>
+      <p class="hint-final">!!힌트!! 연오세오댁 옆을<br/>직접 확인하세요</p>
       <input type="text" id="ans" inputmode="text" autocomplete="off"
              placeholder="여기에 답을 적어요" onkeydown="if(event.key==='Enter')check();" />
       <p class="feedback" id="fb"></p>
@@ -98,7 +100,7 @@
     <div class="panel">
       <p class="big-emoji">☀️</p>
       <p class="result-title">정답이에요!</p>
-      <p class="sub">해를 뜻하는 한자, <b>일(日)</b>.<br/>첫번째 힌트를 얻었어요!</p>
+      <p class="sub">옆집 이름의 가운데 글자, <b>일</b>!<br/>최종 미션의 첫번째 힌트를 얻었어요!</p>
       <div class="btns">
         <a class="btn" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1?startSceneID=639124">다음 이야기로 →</a>
       </div>
