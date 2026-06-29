@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1026" />
+<title>연오랑과 세오녀 · 사라진 빛을 찾아</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --gold:#ffd97a;--gold-soft:#ffe9b0;--text:#f6f2ff;--panel:rgba(8,10,30,.6);
+    --line:rgba(255,217,122,.45);--ink:#231a05;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{min-height:100svh;font-family:"Gowun Batang",serif;color:var(--text);
+    background:linear-gradient(180deg,#0b1026 0%,#161145 45%,#2a1a4a 100%);
+    overflow-x:hidden;position:relative;transition:background 1.2s ease;}
+  /* 빛을 되찾는 장면용 따뜻한 배경 */
+  body.dawn{background:linear-gradient(180deg,#2a1a4a 0%,#5b3b6b 40%,#b9663f 78%,#ffce7a 100%);}
+  body.dark{background:linear-gradient(180deg,#05060f 0%,#0a0a1c 60%,#11102a 100%);}
+
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:tw 3.5s infinite ease-in-out;}
+  @keyframes tw{0%,100%{opacity:.2;}50%{opacity:1;}}
+  .moon{position:absolute;top:6%;right:11%;width:78px;height:78px;border-radius:50%;
+    background:radial-gradient(circle at 34% 32%,#fffdf2,#ffe9a8 60%,#e9c463 100%);
+    box-shadow:0 0 32px 9px rgba(255,228,150,.42),0 0 84px 28px rgba(255,210,120,.16);
+    animation:fl 7s ease-in-out infinite;transition:opacity 1s;}
+  @keyframes fl{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+  #stage{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;
+    justify-content:center;padding:22px 18px calc(26px + env(safe-area-inset-bottom));}
+  .scene{display:none;width:100%;max-width:540px;text-align:center;}
+  .scene.active{display:block;animation:fade .6s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .act{font-family:"Gaegu",cursive;letter-spacing:.14em;color:var(--gold);font-size:.95rem;margin:0 0 10px;opacity:.92;}
+
+  /* 타이틀 */
+  h1{font-family:"Gaegu",cursive;color:var(--gold-soft);font-size:clamp(2.3rem,11vw,3.4rem);
+    line-height:1.12;margin:4px 0 6px;text-shadow:0 3px 22px rgba(255,210,120,.45);word-break:keep-all;}
+  .tagline{font-family:"Gaegu",cursive;color:var(--gold);font-size:clamp(1.2rem,5.6vw,1.6rem);
+    margin:0 0 20px;letter-spacing:.04em;text-shadow:0 2px 14px rgba(255,210,120,.3);}
+
+  /* 캐릭터 */
+  .cast{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin:6px 0 8px;}
+  .cast.one{gap:0;}
+  .char{width:46%;max-width:200px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.45));
+    animation:bob 5s ease-in-out infinite;}
+  .char.solo{width:62%;max-width:240px;}
+  .char.r{animation-delay:.6s;transform:scaleX(-1);} /* 연오랑이 세오녀를 바라보게 */
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  .char.r{}
+  .char.r{transform-origin:center;}
+  /* scaleX 뒤집힘과 bob 동시 적용 위해 래퍼 사용 */
+  .charwrap{width:46%;max-width:200px;animation:bob 5s ease-in-out infinite;}
+  .charwrap.solo{width:62%;max-width:240px;}
+  .charwrap.delay{animation-delay:.6s;}
+  .charwrap img{width:100%;display:block;filter:drop-shadow(0 12px 22px rgba(0,0,0,.45));}
+  .charwrap.flip img{transform:scaleX(-1);}
+  .imgfallback{font-size:3.4rem;line-height:1;padding:24px 0;opacity:.85;}
+
+  .panel{background:var(--panel);backdrop-filter:blur(3px);border:1px solid var(--line);
+    border-radius:22px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.42);}
+  .story p{font-size:clamp(1.1rem,5vw,1.4rem);line-height:1.7;margin:.2em 0;word-break:keep-all;
+    text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .story p.em{color:var(--gold-soft);font-weight:700;}
+
+  .btns{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+  .btn{display:flex;align-items:center;justify-content:center;text-decoration:none;
+    font-family:"Gaegu",cursive;cursor:pointer;border:none;width:100%;min-height:62px;
+    border-radius:18px;font-size:1.5rem;font-weight:700;color:var(--ink);
+    background:linear-gradient(180deg,#ffe9b0,#ffd070);box-shadow:0 8px 22px rgba(255,200,100,.3);
+    transition:transform .12s, box-shadow .12s;word-break:keep-all;padding:10px 16px;}
+  .btn:active{transform:translateY(2px) scale(.99);}
+  .btn.ghost{background:transparent;color:var(--gold-soft);border:1.6px solid var(--line);
+    box-shadow:none;font-size:1.15rem;font-weight:400;min-height:50px;font-family:"Gowun Batang",serif;}
+  .btn.big{min-height:70px;font-size:1.7rem;
+    background:linear-gradient(180deg,#fff0c4,#ffcf63);box-shadow:0 10px 28px rgba(255,200,100,.42);}
+
+  /* 진행 점 */
+  .dots{display:flex;justify-content:center;gap:8px;margin:16px 0 2px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,217,122,.3);transition:.3s;}
+  .dot.on{background:var(--gold);transform:scale(1.25);box-shadow:0 0 8px rgba(255,217,122,.7);}
+
+  .tap{font-size:.86rem;opacity:.6;margin-top:14px;font-family:"Gowun Batang",serif;}
+  .glow{display:inline-block;animation:gl 2.2s ease-in-out infinite;}
+  @keyframes gl{0%,100%{filter:drop-shadow(0 0 4px rgba(255,217,122,.5));}50%{filter:drop-shadow(0 0 16px rgba(255,217,122,.95));}}
+</style>
+</head>
+<body>
+<div id="sky"><div class="moon" id="moon"></div></div>
+<main id="stage">
+
+  <!-- 0. 타이틀 -->
+  <section class="scene active" id="s0" data-bg="">
+    <p class="act">XROO 방탈출</p>
+    <div class="cast">
+      <div class="charwrap delay"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
+      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+    </div>
+    <h1>연오랑과 세오녀</h1>
+    <p class="tagline">— 사라진 빛을 찾아 —</p>
+    <div class="btns">
+      <button class="btn big" onclick="next()">✨ 시작하기</button>
+    </div>
+    <p class="tap">옛날 동해 바닷가의 이야기가 시작돼요</p>
+  </section>
+
+  <!-- 1 -->
+  <section class="scene" id="s1" data-bg="">
+    <div class="cast">
+      <div class="charwrap"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
+      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+    </div>
+    <div class="panel">
+      <div class="story">
+        <p>아주 먼 옛날,</p>
+        <p>동해 바닷가 마을에</p>
+        <p class="em">연오랑과 세오녀</p>
+        <p>부부가 살았어요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="scene" id="s2" data-bg="">
+    <div class="cast one">
+      <div class="charwrap solo flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+    </div>
+    <div class="panel">
+      <div class="story">
+        <p>어느 날 연오랑이 바다에서</p>
+        <p>해초를 따고 있는데,</p>
+        <p class="em">커다란 바위가 둥실—</p>
+        <p>그를 바다 건너 일본으로<br/>데려가 버렸어요.</p>
+        <p>사람들은 그를 왕으로 모셨답니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="scene" id="s3" data-bg="">
+    <div class="cast one">
+      <div class="charwrap solo"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
+    </div>
+    <div class="panel">
+      <div class="story">
+        <p>남편이 돌아오지 않자</p>
+        <p>세오녀가 찾아 나섰어요.</p>
+        <p>바닷가 바위 위 신발을 보고<br/>그 위에 오르니,</p>
+        <p class="em">바위가 세오녀도 실어<br/>일본으로 데려갔어요.</p>
+        <p>둘은 다시 만나 행복했답니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 - 어둠 -->
+  <section class="scene" id="s4" data-bg="dark">
+    <div class="panel">
+      <div class="story">
+        <p>그런데 이게 웬일!</p>
+        <p>두 사람이 떠난 신라에서는</p>
+        <p class="em">해와 달이 빛을 잃고</p>
+        <p>온 세상이 캄캄해졌어요. 🌑</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="scene" id="s5" data-bg="dark">
+    <div class="panel">
+      <div class="story">
+        <p>하늘을 살피던 일관이 아뢰었어요.</p>
+        <p>“해와 달의 정기가</p>
+        <p>일본으로 건너갔습니다!”</p>
+        <p>왕은 두 사람을 찾아<br/>사신을 보냈어요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="scene" id="s6" data-bg="">
+    <div class="cast one">
+      <div class="charwrap solo flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+    </div>
+    <div class="panel">
+      <div class="story">
+        <p>연오랑이 말했어요.</p>
+        <p>“나는 돌아갈 수 없지만…</p>
+        <p>세오녀가 곱게 짠</p>
+        <p class="em">비단을 가져가세요.</p>
+        <p>이것으로 하늘에 제사를 지내면<br/>빛이 돌아올 거예요.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 - 빛 되찾음 -->
+  <section class="scene" id="s7" data-bg="dawn">
+    <div class="panel">
+      <div class="story">
+        <p>비단을 펼쳐 하늘에<br/>정성껏 제사를 지내자…</p>
+        <p class="em glow">해와 달이 다시 빛났어요! ☀️🌙</p>
+        <p>그 귀한 비단은 창고에 모셔</p>
+        <p>나라의 보물이 되었답니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 - 미션 시작 -->
+  <section class="scene" id="s8" data-bg="">
+    <p class="act">그리고 오늘…</p>
+    <div class="cast">
+      <div class="charwrap delay"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
+      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+    </div>
+    <div class="panel">
+      <div class="story">
+        <p>그 빛이 또다시 사라졌어요!</p>
+        <p class="em">이제 여러분이 나설 차례예요.</p>
+        <p>다섯 개의 수수께끼를 풀고<br/>사라진 빛을 되찾아 주세요. 🔦</p>
+      </div>
+      <div class="btns">
+        <a class="btn big" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1">🚪 방탈출 시작하기</a>
+        <button class="btn ghost" onclick="goTo(0)">↺ 이야기 처음부터</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 진행 표시 + 다음 버튼 (스토리 장면에서만) -->
+  <div id="nav" style="position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:2;display:none;">
+    <div style="max-width:540px;margin:0 auto;padding:0 18px;">
+      <div class="dots" id="dots"></div>
+      <button class="btn" onclick="next()">다음 →</button>
+    </div>
+  </div>
+
+</main>
+<script>
+  // 스토리 장면 순서 (타이틀 s0 → s1..s7 → 미션 s8)
+  var scenes=['s0','s1','s2','s3','s4','s5','s6','s7','s8'];
+  var i=0;
+  var nav=document.getElementById('nav');
+  var dotsBox=document.getElementById('dots');
+  var moon=document.getElementById('moon');
+
+  // 점 만들기: 스토리 본문(s1~s7)만 표시
+  var storyCount=7;
+  for(var d=0; d<storyCount; d++){var el=document.createElement('div');el.className='dot';dotsBox.appendChild(el);}
+  var dotEls=dotsBox.querySelectorAll('.dot');
+
+  function render(){
+    document.querySelectorAll('.scene').forEach(function(s){s.classList.remove('active');});
+    var id=scenes[i];
+    var sec=document.getElementById(id);
+    sec.classList.add('active');
+
+    // 배경 전환
+    document.body.classList.remove('dark','dawn');
+    var bg=sec.getAttribute('data-bg');
+    if(bg) document.body.classList.add(bg);
+    moon.style.opacity=(bg==='dark')?'0':'1';
+
+    // 하단 내비: 타이틀(0)과 미션(마지막)에서는 숨김
+    var isStory=(i>=1 && i<=7);
+    nav.style.display=isStory?'block':'none';
+    if(isStory){
+      dotEls.forEach(function(e,k){e.classList.toggle('on',k===(i-1));});
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function next(){ if(i<scenes.length-1){i++;render();} }
+  function goTo(n){ i=n; render(); }
+
+  // 스토리 장면에서 화면(패널 외 빈 곳) 탭하면 다음으로
+  document.getElementById('stage').addEventListener('click',function(e){
+    if(i>=1 && i<=7 && !e.target.closest('.btn') && !e.target.closest('#nav')){ next(); }
+  });
+
+  // 별 생성
+  (function(){var sky=document.getElementById('sky');for(var k=0;k<44;k++){var s=document.createElement('div');
+    s.className='star';var z=Math.random()*2.2+0.8;s.style.width=s.style.height=z+'px';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*3.5)+'s';s.style.opacity=(Math.random()*0.6+0.3).toFixed(2);sky.appendChild(s);}})();
+
+  render();
+</script>
+</body>
+</html>
