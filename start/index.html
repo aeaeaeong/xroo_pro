@@ -32,44 +32,38 @@
   @keyframes fl{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
   #stage{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;
-    justify-content:center;padding:22px 18px calc(26px + env(safe-area-inset-bottom));}
+    justify-content:center;padding:14px 18px calc(18px + env(safe-area-inset-bottom));}
   .scene{display:none;width:100%;max-width:540px;text-align:center;}
   .scene.active{display:block;animation:fade .6s ease both;}
   @keyframes fade{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 
-  .act{font-family:"Gaegu",cursive;letter-spacing:.14em;color:var(--gold);font-size:.95rem;margin:0 0 10px;opacity:.92;}
+  .act{font-family:"Gaegu",cursive;letter-spacing:.14em;color:var(--gold);font-size:.95rem;margin:0 0 6px;opacity:.92;}
 
   /* 타이틀 */
-  h1{font-family:"Gaegu",cursive;color:var(--gold-soft);font-size:clamp(2.3rem,11vw,3.4rem);
-    line-height:1.12;margin:4px 0 6px;text-shadow:0 3px 22px rgba(255,210,120,.45);word-break:keep-all;}
-  .tagline{font-family:"Gaegu",cursive;color:var(--gold);font-size:clamp(1.2rem,5.6vw,1.6rem);
-    margin:0 0 20px;letter-spacing:.04em;text-shadow:0 2px 14px rgba(255,210,120,.3);}
+  h1{font-family:"Gaegu",cursive;color:var(--gold-soft);font-size:clamp(1.9rem,8.5vw,2.9rem);
+    line-height:1.1;margin:2px 0 4px;text-shadow:0 3px 22px rgba(255,210,120,.45);word-break:keep-all;}
+  .tagline{font-family:"Gaegu",cursive;color:var(--gold);font-size:clamp(1.05rem,5vw,1.4rem);
+    margin:0 0 12px;letter-spacing:.04em;text-shadow:0 2px 14px rgba(255,210,120,.3);}
 
-  /* 캐릭터 */
-  .cast{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin:6px 0 8px;}
+  /* 캐릭터 — 화면 높이에 맞춰 크기 자동 조절(스크롤 방지) */
+  .cast{display:flex;justify-content:center;align-items:flex-end;gap:8px;margin:2px 0 6px;}
   .cast.one{gap:0;}
-  .char{width:46%;max-width:200px;filter:drop-shadow(0 12px 22px rgba(0,0,0,.45));
-    animation:bob 5s ease-in-out infinite;}
-  .char.solo{width:62%;max-width:240px;}
-  .char.r{animation-delay:.6s;transform:scaleX(-1);} /* 연오랑이 세오녀를 바라보게 */
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
-  .char.r{}
-  .char.r{transform-origin:center;}
-  /* scaleX 뒤집힘과 bob 동시 적용 위해 래퍼 사용 */
-  .charwrap{width:46%;max-width:200px;animation:bob 5s ease-in-out infinite;}
-  .charwrap.solo{width:62%;max-width:240px;}
+  .charwrap{animation:bob 5s ease-in-out infinite;line-height:0;}
   .charwrap.delay{animation-delay:.6s;}
-  .charwrap img{width:100%;display:block;filter:drop-shadow(0 12px 22px rgba(0,0,0,.45));}
+  .charwrap img{display:block;width:auto;height:clamp(160px,29svh,290px);
+    filter:drop-shadow(0 12px 22px rgba(0,0,0,.45));}
+  .charwrap.solo img{height:clamp(180px,36svh,360px);}
   .charwrap.flip img{transform:scaleX(-1);}
   .imgfallback{font-size:3.4rem;line-height:1;padding:24px 0;opacity:.85;}
 
   .panel{background:var(--panel);backdrop-filter:blur(3px);border:1px solid var(--line);
-    border-radius:22px;padding:22px 20px;box-shadow:0 14px 40px rgba(0,0,0,.42);}
-  .story p{font-size:clamp(1.1rem,5vw,1.4rem);line-height:1.7;margin:.2em 0;word-break:keep-all;
+    border-radius:22px;padding:18px 18px;box-shadow:0 14px 40px rgba(0,0,0,.42);}
+  .story p{font-size:clamp(1.05rem,4.6vw,1.32rem);line-height:1.55;margin:.12em 0;word-break:keep-all;
     text-shadow:0 1px 8px rgba(0,0,0,.5);}
   .story p.em{color:var(--gold-soft);font-weight:700;}
 
-  .btns{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+  .btns{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
   .btn{display:flex;align-items:center;justify-content:center;text-decoration:none;
     font-family:"Gaegu",cursive;cursor:pointer;border:none;width:100%;min-height:62px;
     border-radius:18px;font-size:1.5rem;font-weight:700;color:var(--ink);
@@ -147,7 +141,7 @@
     <p class="act">XROO 방탈출</p>
     <div class="cast">
       <div class="charwrap delay"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
-      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+      <div class="charwrap"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
     </div>
     <h1>연오랑과 세오녀</h1>
     <p class="tagline">— 사라진 빛을 찾아 —</p>
@@ -161,7 +155,7 @@
   <section class="scene" id="s1" data-bg="">
     <div class="cast">
       <div class="charwrap"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
-      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+      <div class="charwrap"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
     </div>
     <div class="panel">
       <div class="story">
@@ -176,7 +170,7 @@
   <!-- 2 -->
   <section class="scene" id="s2" data-bg="">
     <div class="cast one">
-      <div class="charwrap solo flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+      <div class="charwrap solo"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
     </div>
     <div class="panel">
       <div class="story">
@@ -232,7 +226,7 @@
   <!-- 6 -->
   <section class="scene" id="s6" data-bg="">
     <div class="cast one">
-      <div class="charwrap solo flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+      <div class="charwrap solo"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
     </div>
     <div class="panel">
       <div class="story">
@@ -262,7 +256,7 @@
     <p class="act">그리고 오늘…</p>
     <div class="cast">
       <div class="charwrap delay"><img src="img/seonyeo.png" alt="세오녀" onerror="this.parentNode.innerHTML='<div class=imgfallback>👸</div>'"></div>
-      <div class="charwrap flip"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
+      <div class="charwrap"><img src="img/yeonorang.png" alt="연오랑" onerror="this.parentNode.innerHTML='<div class=imgfallback>🧑‍🌾</div>'"></div>
     </div>
     <div class="panel">
       <div class="story">
