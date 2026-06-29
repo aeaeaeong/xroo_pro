@@ -48,6 +48,11 @@
   .btn.choice{background:rgba(255,255,255,.06);color:var(--text);border:1.5px solid var(--line);box-shadow:none;
     font-size:1.45rem;min-height:60px;}
   .btn.choice:active{background:rgba(255,217,122,.18);}
+  .answer-input{width:100%;min-height:58px;border-radius:16px;border:1.5px solid var(--line);
+    background:rgba(255,255,255,.06);color:var(--text);font-family:"Gowun Batang",serif;
+    font-size:1.3rem;text-align:center;padding:10px 14px;outline:none;}
+  .answer-input::placeholder{color:rgba(246,242,255,.45);font-size:1.05rem;}
+  .answer-input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,217,122,.25);}
   .big-emoji{font-size:3.2rem;line-height:1;margin-bottom:6px;}
   .result-title{font-family:"Gaegu",cursive;font-size:clamp(1.9rem,8.5vw,2.5rem);margin:4px 0 10px;}
   .good .result-title{color:var(--good);} .bad .result-title{color:var(--bad);}
@@ -57,26 +62,23 @@
 <div id="sky"><div class="moon"></div></div>
 <main id="stage">
 
-  <!-- 씬 12: 비단 앞 퀴즈 (객관식) -->
+  <!-- 씬 12: 비단 앞 퀴즈 (주관식) -->
   <section class="scene active" id="quiz">
     <p class="act">XROO · 씬 12 · 귀비고</p>
     <div class="panel">
       <div class="story">
-        <p>세오녀의 비단이</p>
-        <p>빛을 되찾아, 이제 밝은</p>
-        <p>356일을 보낼 수 있어요!</p>
+        <p>‘귀비고 비단함’은 설화 속</p>
+        <p>잃어버린 해와 달의 빛을</p>
+        <p>되찾은 상징물이에요.</p>
       </div>
       <div class="divider"></div>
-      <p class="q">1부터 12까지 뒤에 붙어<br/>한 해를 완성하는 글자는?</p>
-      <p class="hint-final">!!최종 미션의 세번째 힌트!!</p>
-      <div class="grid">
-        <button class="btn choice" onclick="answer(false)">일</button>
-        <button class="btn choice" onclick="answer(true)">월</button>
-        <button class="btn choice" onclick="answer(false)">화</button>
-        <button class="btn choice" onclick="answer(false)">수</button>
-        <button class="btn choice" onclick="answer(false)">목</button>
-        <button class="btn choice" onclick="answer(false)">금</button>
-        <button class="btn choice" onclick="answer(false)">토</button>
+      <p class="q">이 유물이 전시된 건물 안에는<br/>관련 영상을 상영하는<br/>‘[이곳]영상관’이 있어요.<br/>이 영상관의 이름은?</p>
+      <p class="hint-final">!!답의 두번째 글자가 최종 미션의 힌트!!</p>
+      <div class="btns">
+        <input id="ansInput" class="answer-input" type="text" inputmode="text"
+          autocomplete="off" placeholder="정답을 입력하세요"
+          onkeydown="if(event.key==='Enter'){checkAnswer();}" />
+        <button class="btn" onclick="checkAnswer()">정답 확인</button>
       </div>
     </div>
   </section>
@@ -85,8 +87,8 @@
   <section class="scene bad" id="wrong">
     <div class="panel">
       <p class="big-emoji">💧</p>
-      <p class="result-title">처음부터 다시!</p>
-      <p class="sub">1월, 2월, 3월…<br/>다시 떠올려 봐요.</p>
+      <p class="result-title">다시 한 번!</p>
+      <p class="sub">귀비고 안 영상관 이름을<br/>다시 살펴봐요.</p>
       <div class="btns">
         <a class="btn ghost" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1?startSceneID=639141">처음으로 돌아가기</a>
       </div>
@@ -98,9 +100,9 @@
     <div class="panel">
       <p class="big-emoji">🌙</p>
       <p class="result-title">정답이에요!</p>
-      <p class="sub">세번째 힌트, <b>월(月)</b>!<br/>이제 마지막 장소로…</p>
+      <p class="sub"><b>일월영상관</b>!<br/>두번째 글자 <b>월(月)</b>이 힌트예요.<br/>이제 마지막 장소로…</p>
       <div class="btns">
-        <a class="btn" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1?startSceneID=639151">다음 이야기로 →</a>
+        <a class="btn" href="https://player.xroo.io/space/fd918e5ec332406980d4259089f3ad9c/1?startSceneID=639140">다음 이야기로 →</a>
       </div>
     </div>
   </section>
@@ -109,7 +111,11 @@
 <script>
   function go(id){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
     document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
-  function answer(ok){go(ok?'correct':'wrong');}
+  function checkAnswer(){
+    var raw=(document.getElementById('ansInput').value||'').replace(/\s/g,'');
+    var ok=(raw==='일월'||raw==='일월영상관');
+    go(ok?'correct':'wrong');
+  }
   (function(){const sky=document.getElementById('sky');for(let i=0;i<46;i++){const s=document.createElement('div');
     s.className='star';const z=Math.random()*2.2+0.8;s.style.width=s.style.height=z+'px';
     s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
